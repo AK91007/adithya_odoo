@@ -1,6 +1,6 @@
 {
 	'name' : 'School Management App',
-	'version': '1.1',
+	'version': '1.2',
 	'Category' : 'Contact Management',
 	'author': 'Adithya',
     'company': 'Adithya Group of Institutions',
