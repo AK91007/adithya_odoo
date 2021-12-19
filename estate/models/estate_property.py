@@ -18,4 +18,7 @@ class EstateProperty(models.Model):
 	garden_area = fields.Integer()
 	garden_orientation = fields.Selection([('north','North'),('south','South'),('west','West'),('east','East')])
 	active = fields.Boolean()
+	image = fields.Image()
+
+	
 
