@@ -20,6 +20,21 @@
 		<field name='res_model'>estate.property.offer</field>
 		<field name='view_mode'>tree,form</field>
 	</record>
+	<record id='real_estate_book_genre_action' model='ir.actions.act_window'>
+		<field name='name'>Book Genre</field>
+		<field name='res_model'>book.genre</field>
+		<field name='view_mode'>tree,form</field>
+	</record>
+	<record id='real_estate_book_department_action' model='ir.actions.act_window'>
+		<field name='name'>Book Department</field>
+		<field name='res_model'>book.department</field>
+		<field name='view_mode'>tree,form</field>
+	</record>
+	<record id='real_estate_book_writer_action' model='ir.actions.act_window'>
+		<field name='name'>Book Writer</field>
+		<field name='res_model'>book.writer</field>
+		<field name='view_mode'>tree,form</field>
+	</record>
 
 	<menuitem id='menu_real_estate_root' name="Real Estate">
 		<menuitem id='menu_real_estate_advertisements' name='Advertisements'>
@@ -31,6 +46,9 @@
 		</menuitem>
 		<menuitem id='menu_real_estate_property_type' name='Settings'>
 			<menuitem id='menu_real_estate_property_type_action' action='real_estate_property_type_action'/>
+			<menuitem id='menu_real_estate_book_genre_action' action='real_estate_book_genre_action'/>
+			<menuitem id='menu_real_estate_book_department_action' action='real_estate_book_department_action'/>
+			<menuitem id='menu_real_estate_book_writer_action' action='real_estate_book_writer_action'/>
 		</menuitem>
 
 	</menuitem>

@@ -79,6 +79,7 @@
 								<field name='garden'/>
 								<field name='garden_area'/>
 								<field name='garden_orientation'/>
+								<field name='total_area'/>
 							</group>
 						</page>
 						<page string='Other Information'>
@@ -124,7 +125,20 @@
 						<field name='book_price'/>
 						<field name='book_publication'/>
 						
+						
 					</group>
+					<notebook>
+						<page string='Book Information'>
+							<group>
+								<field name='book_genre_id'/>
+								<field name='book_location_id'/>
+								<field name='book_department_id'/>
+								<field name='book_writer_id' widget='many2many_tags'/>
+								<field name='book_isbn'/>
+								<field name='book_barcode'/>
+							</group>
+						</page>
+					</notebook>
 					<!-- <notebook>
 						<page string='Description'>
 							<field name='description'/>
