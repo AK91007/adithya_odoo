@@ -4,10 +4,14 @@
 		<field name='name'>Estate Property Name</field>
 		<field name='model'>estate.property</field>
 		<field name='arch' type='xml'>
-			<tree>
+			<tree decoration-success="status=='sold'" decoration-danger="status=='cancel'" decoration-muted="status==None">
 				<field name='name'/>
+				<field name='property_type_id'/>
+				<field name='postcode'/>
+				<field name='property_tag_id' widget='many2many_tags'/>
 				<field name='expected_price'/>
-				<field name='selling_price'/>
+				<field name='selling_price' optional='hide'/>
+				<field name='status' invisible='1'/>
 			</tree>
 		</field>
 	</record>
@@ -27,6 +31,7 @@
 	<record id='estate_property_offer_tree' model='ir.ui.view'>
 		<field name='name'>Estate Property Offer</field>
 		<field name='model'>estate.property.offer</field>
+
 		<field name='arch' type='xml'>
 			<tree>
 				<field name='offer_partner_id'/>
@@ -35,11 +40,46 @@
 			</tree>
 		</field>
 	</record>
+	<record id='estate_property_type_form' model='ir.ui.view'>
+		<field name='name'>Estate Property Type</field>
+		<field name='model'>estate.property.type</field>
+		<field name='arch' type='xml'>
+			<form>
+				<sheet>
+					<notebook>
+						<page string='Properties'>
+							<field name='property_id_type'>
+								<tree>
+									<field name='name'/>
+									<field name='expected_price'/>
+									<field name='status'/>
+								</tree>
+							</field>
+						</page>
+					</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+<!-- 	<record id='estate_property_offer_form' model='ir.ui.view'>
+		<field name='name'>Estate Property Offer</field>
+		<field name='model'>estate.property.offer</field>
+		<field name='arch' type='xml'>
+			<form>
+				<field name = 'offer_validity'/>
+			</form>
+		</field>
+	</record> -->
 	<record id='estate_property_form' model='ir.ui.view'>
 		<field name='name'>Estate Property Name</field>
 		<field name='model'>estate.property</field>
 		<field name='arch' type='xml'>
 			<form>
+				<header>
+					<button name='action_sold' type='object' string='Sold' class='oe_highlight' attrs="{'invisible':[('status','=','sold')]}"/>
+					<button name='action_cancel' type='object' string='Cancel' class='oe_highlight'/>
+					<field name='status' widget='statusbar'/>
+				</header>
 				<sheet>
 					
 					<div Class='oe_title'>
@@ -52,9 +92,12 @@
 						
 					</div>
 					<group>
-						<field name = 'property_type_id'/>
-						<field name = 'property_tag_id' widget='many2many_tags'/>
+						<field name = 'property_type_id' options="{'no_create':True,'no_open':True}"/>
+						<field name = 'property_tag_id' widget='many2many_tags' options="{'color_field':'color'}"/>
 					</group>
+					<!-- <group>
+						<field name = 'status'/>
+					</group> -->
 					<group>
 						<field name = 'best_price'/>
 					</group>
@@ -94,8 +137,15 @@
 						</page>
 						<page string='Offers'>
 							<group>
-								<field name='property_offer_id'/>
-								
+								<field name='property_offer_id'>
+									<tree editable="True">
+										<field name = 'offer_partner_id'/>
+										<field name = 'offer_price'/>
+										<button name='action_accepted' type='object' string='Accept' icon='fa_check'/>
+										<button name='action_refused' type='object' string='Reject' icon='fa_close'/>
+										<field name='offer_status'/>
+									</tree>
+								</field>
 							</group>
 						</page>
 

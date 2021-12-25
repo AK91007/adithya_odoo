@@ -1,21 +1,31 @@
 from odoo import models, fields, api
 import datetime
+from odoo.exceptions import UserError,ValidationError
 
 class EstatePropertyType(models.Model):
 	_name = 'estate.property.type'
 	_description = 'Estate Property Type'
-
+	_sql_constraints = [('unique_property_type_name','unique(name)','Property type cannot be duplicated')]
+	_order = 'name'
 	name = fields.Char()
+	property_id_type = fields.One2many('estate.property','property_type_id')
+
+
 class EstatePropertyTag(models.Model):
 	_name = 'estate.property.tag'
 	_description = 'Estate Property Tag'
-
+	_sql_constraints = [('unique_property_tag_name','unique(name)','Property tag cannot be duplicated')]
+	_order = 'name'
 	name = fields.Char()
+	color = fields.Integer()
 
 class EstatePropertyOffer(models.Model):
 	_name = 'estate.property.offer'
 	_description = 'Estate Property Offer'
 	_rec_name = 'property_id'
+	_sql_constraints = [('positive_offer_price','check(offer_price>=0)','Offer Price must be positive'),
+						('positive_offer_validity','check(offer_validity>=0)','Offer validity must be positive')]
+	_order = 'offer_price desc'
 	property_id = fields.Many2one('estate.property')
 	offer_partner_id = fields.Many2one('res.partner')
 	offer_status = fields.Selection([('accepted','Accepted'),('refused','Refused')])
@@ -33,10 +43,30 @@ class EstatePropertyOffer(models.Model):
 		for record in self:
 			record.offer_validity = (record.offer_deadline - record.offer_create_date).days
 
-	
+	@api.constrains('property_id.expected_price','offer_price')
+	def action_accepted(self):
+		for record in self:
+			if record.offer_price < (0.9*record.property_id.expected_price):
+				raise ValidationError('Offer price cannot be less than 90 percent of expected price')
+			# if self.offer_status == 'accepted':
+			# 	raise UserError('Only one offer can be accepted')
+			# for l in record.property_id.property_offer_id.offer_status:
+			# 	if l.offer_status == 'accepted':
+			# 		raise UserError('Only one offer can be accepted')
+			record.offer_status = 'accepted'
+			# Set the selling price to the accepted offer price
+			record.property_id.selling_price = record.offer_price
+			record.property_id.buyer_id = record.offer_partner_id
+
+	def action_refused(self):
+		for record in self:
+			record.offer_status = 'refused'
+
 class EstateProperty(models.Model):
 	_name = 'estate.property'
 	_description = 'Test Model'
+	_sql_constraints = [('positive_expected_price','CHECK(expected_price>=0)','Expected price must be greater than zero'),
+	                    ('postalcode_length','CHECK(LENGTH(postcode)<7)','Length of postcode cannot be greater than 6')]
 
 	name = fields.Char(string='Title', default='Unknown', required=True)
 	description = fields.Text()
@@ -60,6 +90,7 @@ class EstateProperty(models.Model):
 	property_offer_id = fields.One2many('estate.property.offer', 'property_id')
 	total_area=fields.Integer(compute='_compute_area', inverse='_inverse_area')
 	best_price = fields.Float(compute='_compute_best_price')
+	status = fields.Selection([('new','New'),('sold','Sold'),('cancel','Cancelled')],default='new')
 
 	@api.onchange('garden')
 	def _onchange_garden(self):
@@ -90,5 +121,21 @@ class EstateProperty(models.Model):
 			record.living_area = record.garden_area = record.total_area/2
 
 
+	def action_sold(self):
+		for record in self:
+			if record.status == 'cancel':
+				raise UserError('Cancelled property cannot be sold')
+			record.status = 'sold'
+
+	def action_cancel(self):
+		for record in self:
+			if record.status == 'sold':
+				raise UserError('Sold property cannot be cancelled')
+			record.status = 'cancel'
 
 
+	@api.constrains('garden_area','living_area')
+	def _check_garden_area(self):
+		for record in self:
+			if record.garden_area > record.living_area:
+				raise ValidationError('Garden area cannot be bigger than living area')
