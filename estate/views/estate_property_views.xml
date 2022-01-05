@@ -12,6 +12,7 @@
 				<field name='expected_price'/>
 				<field name='selling_price' optional='hide'/>
 				<field name='status' invisible='1'/>
+				<field name='living_area'/>
 			</tree>
 		</field>
 	</record>
@@ -70,6 +71,36 @@
 			</form>
 		</field>
 	</record> -->
+	<record id = 'bank_property_form' model='ir.ui.view'>
+		<field name='name'>Bank Property Type Form</field>
+		<field name='model'>estate.property</field>
+		<field name='inherit_id' ref='estate.estate_property_form'/>
+		<field name='arch' type='xml'>
+			<xpath expr="//field[@name='date_availability']" position='after'>
+				<field name='bank_name'/>
+				<field name='bank_interest'/>
+			</xpath>
+		</field>
+	</record>
+	<record id = 'res_partner_view_form' model='ir.ui.view'>
+		<field name='name'>Res Partner Form</field>
+		<field name='model'>res.partner</field>
+		<field name='inherit_id' ref='base.view_partner_form'/>
+		<field name='arch' type='xml'>
+			<xpath expr="//page[@name='contact_addresses']" position='after'>
+				<page string='Bids'>
+					<field name='offer_ids'>
+						<tree>
+							<field name='property_id'/>
+							<field name='offer_price'/>
+							<field name='offer_status'/>
+						</tree>
+					</field>
+				</page>
+			</xpath>
+		</field>
+	</record>
+
 	<record id='estate_property_form' model='ir.ui.view'>
 		<field name='name'>Estate Property Name</field>
 		<field name='model'>estate.property</field>
@@ -236,6 +267,8 @@
 				<filter name='Property with garage' domain="[('garage','=',True)]"/>
 				<filter name='2 bedrooms with garden' domain="[('bedrooms','=',2),('garden','=',True)]"/>
 				<filter name='Garden-North Facing' domain="[('garden_orientation','=','north')]"/>
+				<filter name='Living Area Greater than 200' domain="[('living_area','>',200)]"/>
+
 				<group expand="1" string='Group By'>
 					<filter string='Postal Code' name='postcode' context="{'group_by':'postcode'}"/>
 					<filter string='Number of Bedrooms' name='bedrooms' context="{'group_by':'bedrooms'}"/>
