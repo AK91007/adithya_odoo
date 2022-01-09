@@ -1,5 +1,62 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
+
+	<record id='real_estate_properties_kanban' model='ir.ui.view'>
+		<field name='name'>Properties Kanban</field>
+		<field name='model'>estate.property</field>
+		<field name='arch' type='xml'>
+			<kanban>
+				<field name='image'/>
+				<field name='id'/>
+				<field name='property_offer_id'/>
+				<templates>
+					<t t-name='kanban-box'>
+						<!-- <div class='oe_kanban_global_click'> -->
+						<div class='oe_kanban_global_click'>
+							<t t-if='record.image.raw_value'>
+								<div class='o_kanban_image'>
+									<img t-att-src="kanban_image('estate.property','image',record.id.raw_value)" alt='Avatar'/>
+								</div>
+							</t>
+							<t t-else="">
+								<div class='o_kanban_image'>
+									<img t-att-src="_s+'/base/static/img/avatar_grey.png'" alt="Avatar"/>
+								</div>
+							</t>
+							<div class='o_kanban_details'>
+								<b><field name='name'/></b><br/>
+						<!-- </div>
+						<div class='row'> -->
+								<!-- <ul> -->
+								<span style='white-space:pre'>Price Expected       </span><t/>
+								<field name='expected_price'/><br/>
+							<!-- <xpath expr="//field[@name='name']" position='after'> -->
+									
+								<field name='property_tag_id' color='id'/><br/>
+								<!-- </ul> -->
+							</div>
+							<div class="o_kanban_record_headings" style='text-align:left'>
+								
+									
+								<!-- <button class='btn btn-primary' name='%(real_estate_property_offer_action)d' type='action' t-esc="record.property_offer_id.value" attrs="{'visible':[('name','=','property_offer_id.property_id')]}"/> -->
+								<button class='btn btn-primary' name='open_offers' type='object' t-esc="record.property_offer_id.value"/>
+									
+								
+							</div>
+							<!-- </xpath> -->
+						<!-- </div>
+						<div class='row'> -->
+							<div style='text-align:right'>
+								<button name='%(action_create_sold_invoice)d' type='action' string='Sold' class='btn btn-primary'>Sold</button>
+								<!-- <button name='action_sold' type='object' string='Sold' class='btn btn-primary'>Sold</button> -->
+							</div>
+							<!-- </div> -->
+						</div>
+					</t>
+				</templates>
+			</kanban>
+		</field>
+	</record>
 	<record id='estate_property_tree' model='ir.ui.view'>
 		<field name='name'>Estate Property Name</field>
 		<field name='model'>estate.property</field>
@@ -14,6 +71,25 @@
 				<field name='status' invisible='1'/>
 				<field name='living_area'/>
 			</tree>
+		</field>
+	</record>
+	<record id='real_estate_properties_calendar' model='ir.ui.view'>
+		<field name='name'>Properties</field>
+		<field name='model'>estate.property</field>
+		<field name='arch' type='xml'>
+			<calendar string='Property Availability' date_start='create_date' date_stop='date_availability' color='id'>
+				<field name='name'/>
+			</calendar>
+		</field>
+	</record>
+	<record id='real_estate_properties_graph' model='ir.ui.view'>
+		<field name='name'>Properties Trend</field>
+		<field name='model'>estate.property</field>
+		<field name='arch' type='xml'>
+			<graph string='Property Rates'>
+				<field name='name'/>
+				<field name='selling_price' type='measure'/>
+			</graph>
 		</field>
 	</record>
 	<record id='estate_property_tree_books' model='ir.ui.view'>
@@ -107,7 +183,8 @@
 		<field name='arch' type='xml'>
 			<form>
 				<header>
-					<button name='action_sold' type='object' string='Sold' class='oe_highlight' attrs="{'invisible':[('status','=','sold')]}"/>
+					<!-- <button name='action_sold' type='object' string='Sold' class='oe_highlight' attrs="{'invisible':[('status','=','sold')]}"/> -->
+					<button name='%(action_create_sold_invoice)d' type='action' string='Sold' class='btn btn-primary' context="{'default_partner_id':buyer_id}"/>
 					<button name='action_cancel' type='object' string='Cancel' class='oe_highlight'/>
 					<field name='status' widget='statusbar'/>
 				</header>

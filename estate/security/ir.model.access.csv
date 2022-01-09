@@ -7,3 +7,4 @@ access_estate_property_offer,access_estate_property_offer,model_estate_property_
 access_book_genre,access_book_genre,model_book_genre,base.group_user,1,1,1,1
 access_book_department,access_book_department,model_book_department,base.group_user,1,1,1,1
 access_book_writer,access_book_writer,model_book_writer,base.group_user,1,1,1,1
+access_create_sold_invoice,access_create_sold_invoice,model_create_sold_invoice,base.group_user,1,1,1,1

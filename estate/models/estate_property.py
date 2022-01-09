@@ -133,6 +133,16 @@ class EstateProperty(models.Model):
 				raise UserError('Sold property cannot be cancelled')
 			record.status = 'cancel'
 
+	def open_offers(self):
+		return{
+			"name":'Offers',
+			"type":'ir.actions.act_window',
+			"res_model":'estate.property.offer',
+			"views":[[False,'tree']],
+			"target":'new',
+			"domain":[('property_id','=',self.id)]
+		}
+
 
 	@api.constrains('garden_area','living_area')
 	def _check_garden_area(self):
