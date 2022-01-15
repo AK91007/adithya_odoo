@@ -40,6 +40,11 @@
 		<field name='res_model'>book.writer</field>
 		<field name='view_mode'>tree,form</field>
 	</record>
+	<record id='real_estate_reports_action' model='ir.actions.act_window'>
+		<field name='name'>Property Reports</field>
+		<field name='res_model'>estate.property</field>
+		<field name='view_mode'>tree</field>
+	</record>
 
 	<menuitem id='menu_real_estate_root' name="Real Estate">
 		<menuitem id='menu_real_estate_advertisements' name='Advertisements'>
@@ -48,6 +53,9 @@
 		</menuitem>
 		<menuitem id='menu_real_estate_books' name='Books'>
 			<menuitem id='menu_real_estate_books_action' action='real_estate_books_action'/>
+		</menuitem>
+		<menuitem id='menu_real_estate_reports' name="Reporting">
+			<menuitem id="menu_real_estate_reports_action" action='real_estate_reports_action'/>
 		</menuitem>
 		<menuitem id='menu_real_estate_property_type' name='Settings'>
 			<menuitem id='menu_real_estate_property_type_action' action='real_estate_property_type_action'/>

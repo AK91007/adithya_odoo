@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id='property_detail'><!--The id will be the report name given in property_report !-->
+		<t t-call='web.html_container'><!--To create a blank page !-->
+			<t t-foreach="docs" t-as="o"><!--To loop on multiple records...This is similar to for o in docs in python !-->
+				<t t-call="web.external_layout"><!--To add header and footer to the page !-->
+					<div class="page">
+						<h1><span t-field="o.name"/></h1>
+						<t t-foreach="o.property_tag_id" t-as="tag">
+							<span class="badge badge-success" t-field="tag.name"/><br/>
+						</t>
+						<div>
+							<h3>           </h3>
+						</div>
+						<div>
+							<!-- <table class="table table-sm o_main_table" border="10px" style="width:100%;"> -->
+							<table class="table table-bordered" border="10px" style="border-color:black">
+								<tr>
+									<th>Offer made by</th>
+									<th>Price</th>
+								</tr>
+								<t t-foreach="o.property_offer_id" t-as="offer"><!-- for offer in o.property_offer_id-->
+									
+									<tr>
+										<td><span t-field="offer.offer_partner_id.name"/></td>
+										<td><span t-field="offer.offer_price"/></td>
+									</tr>
+								</t>
+							</table>
+						</div>
+					</div>
+				</t>
+			</t>
+		</t>
+
+	</template>
+</odoo>
