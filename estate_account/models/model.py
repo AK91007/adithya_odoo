@@ -5,6 +5,7 @@ class EstateProperty(models.Model):
 	_inherit = 'estate.property'
 
 	def action_sold(self):
+		super(EstateProperty,self).action_sold()
 		print("\n \n Sold button clicked")
 
 		for record in self:
