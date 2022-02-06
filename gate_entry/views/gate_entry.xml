@@ -141,7 +141,7 @@
     </record>
 
     <!-- Creating a search panel on which view can be catogorized -->
-    <record id="gate_entry_search" model="ir.ui.view"> 
+   <!--  <record id="gate_entry_search" model="ir.ui.view"> 
       <field name="name">gate_entry.search</field> 
       <field name="model">gate.entry.line</field> 
       <field name="arch" type = "xml"> 
@@ -151,7 +151,7 @@
           </searchpanel> 
         </search> 
       </field> 
-    </record>
+    </record> -->
 
     <!-- Different type of views correspodingly -->
     <record model="ir.ui.view" id="gate_entry_tree_view">
@@ -231,15 +231,10 @@
       <field name="name">Entry Report</field>
       <field name="res_model">gate.entry</field>
       <field name="view_mode">tree</field>
- <!--      <field name="help" type="html">
-          <p class="o_view_nocontent_smiling_face">
-              Create a new gate entry
-          </p>
-      </field> -->
     </record>
 
    <record model="ir.actions.act_window" id="gate_entry.action_window_inwards">
-      <field name="name">Inward</field>
+      <field name="name">Check In</field>
       <field name="res_model">gate.entry</field>
       <field name="view_mode">tree,form</field>
       <field name="domain">[('entry_type','=','in')]</field>
@@ -247,7 +242,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="gate_entry.action_window_outwards">
-      <field name="name">Outward</field>
+      <field name="name">Check Out</field>
       <field name="res_model">gate.entry</field>
       <field name="view_mode">tree,form</field>
       <field name="domain">[('entry_type','=','out')]</field>

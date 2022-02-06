@@ -32,7 +32,7 @@
 
     <!-- Registration-->
     <!-- Registration form view-->
-    <record id="gate_entry_registration_form_view" model="ir.ui.view">
+   <!--  <record id="gate_entry_registration_form_view" model="ir.ui.view">
         <field name="name">gate_entry_registration_form</field>
         <field name="model">gate.user.registration</field>
         <field name="arch" type="xml">
@@ -48,7 +48,7 @@
             </sheet>    
         </form>
         </field>
-    </record>
+    </record> -->
 
     <!-- Registration Tree view -->
     <record id="gate_entry_registration_view" model="ir.ui.view">
