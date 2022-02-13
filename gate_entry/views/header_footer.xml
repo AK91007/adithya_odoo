@@ -9,7 +9,7 @@
                     <div class="col-2   text-left">
                         <img class="text-left" t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" style="height:53;width:150px;margin-top:0;"/><br/>
                     </div>
-                    <div class="col-8 text-center" style="font-size:14px !important;">
+                    <div class="col-8 text-center" style="font-size:14px !important;margin-top:15px">
                         <strong>
                             <span t-field="o.warehouse_id.partner_id.street"/><span t-field="o.warehouse_id.partner_id.street2"/><br/>
                             <span t-field="o.warehouse_id.partner_id.city"/>-

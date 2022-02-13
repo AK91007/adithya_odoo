@@ -25,6 +25,7 @@ class GateEntry(models.Model):
     order_type_outward = fields.Selection(string= "Order type",selection =[ ('s','Sale'), ('pr','Purchase Return'),('others','Others')]) # s = sales, pr = purchase return, t = transefer Out
 
     username = fields.Many2one("gate.user.registration")
+    visitorname = fields.Char(string='Visitor Name')
     description = fields.Char()
     # item_description = fields.Char()
     doc_datetime = fields.Datetime("Document Date",help="The datetime entered for user reference",copy=False)

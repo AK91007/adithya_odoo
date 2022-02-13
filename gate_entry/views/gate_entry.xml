@@ -34,6 +34,7 @@
               <field name="description" attrs="{'readonly':[('state', '=', 'processed')]}"/>
               <!-- <field name='station_to'  attrs="{'invisible':[('entry_type', '=', 'in')]}"/> -->
               <field name="username" readonly="1"/>
+              <field name="visitorname" placeholder='Name of Visitor' attrs="{'readonly':[('state','=','processed')]}"/>
             </group>
             <group>
               <field name="doc_datetime" required='1' attrs="{'readonly':[('state', '=', 'processed')]}"/>
