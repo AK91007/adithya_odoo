@@ -82,7 +82,7 @@ class LibraryTransactions(models.Model):
 	date_return=fields.Datetime(string='Return Date',copy=False,default=None)
 	trn_status=fields.Selection([('draft','Draft'),('book_issued','Issued'),('book_return','Returned'),('book_lost','Marked Lost')],default='draft')
 	
-	@api.onchange('date_issue')
+	@api.onchange('date_issue','borrowed_book')
 	def update_date_expected(self):
 		for rec in self:
 			if rec.date_expected is not set:
