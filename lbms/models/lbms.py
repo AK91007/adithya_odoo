@@ -1,6 +1,8 @@
 from odoo import api,models,fields,_
 import datetime
 from datetime import timedelta
+import pdb
+from odoo.exceptions import UserError,ValidationError
 
 class BookGenre(models.Model):
 	_name='book.genre'
@@ -56,7 +58,8 @@ class LibraryManagement(models.Model):
 	publication_date=fields.Date(string='Published Date',copy=False,default=None)
 	image=fields.Image()
 	book_availability=fields.Boolean(string="Available",copy=False)
-
+	book_status=fields.Selection([('available','Available'),('issued','Issued'),('lost','Lost')],default='available',copy=False)
+	lend_days=fields.Integer(string='Lend Days',copy=False,default=15)
 
 
 class LibraryTrnSequence(models.Model):
@@ -73,20 +76,57 @@ class LibraryTransactions(models.Model):
 
 	name=fields.Char(string='Name',copy=False,index=True,default=lambda self:_('New'))
 	borrower_name=fields.Many2one('res.partner',string='Borrower')
-	borrowed_book=fields.Many2one('library.management',string='Borrowed Book')
+	borrowed_book=fields.Many2one('library.management',string='Borrowed Book',domain="[('book_status','=','available')]")
 	date_issue=fields.Datetime(string='Issue Date',copy=False,default=None)
-	date_expected=fields.Datetime(string='Tentative Return',copy=False,default=None)
+	date_expected=fields.Datetime(string='Due Date',copy=False,default=None)
 	date_return=fields.Datetime(string='Return Date',copy=False,default=None)
+	trn_status=fields.Selection([('draft','Draft'),('book_issued','Issued'),('book_return','Returned'),('book_lost','Marked Lost')],default='draft')
 	
+	@api.onchange('date_issue')
+	def update_date_expected(self):
+		for rec in self:
+			if rec.date_expected is not set:
+				rec.date_expected=datetime.datetime.now()+timedelta(days=rec.borrowed_book.lend_days)
 
 	def action_lost(self):
+
 		for rec in self:
+
+
 			if rec.borrowed_book.book_availability==True:
-				rec.borrowed_book.book_availability==False
-	def action_issue():
-		pass
-	def action_return():
-		pass
+				rec.borrowed_book.book_availability=False
+				rec.borrowed_book.book_status='lost'
+				rec.trn_status='book_lost'
+				# pdb.set_trace()
+				print(rec.borrowed_book.book_availability)
+				return rec.borrowed_book.book_availability,rec.borrowed_book.book_status,rec.trn_status
+	
+	def action_issue(self):
+		for rec in self:
+			if (rec.trn_status not in 'draft'):
+				raise ValidationError('Check!!Status not in Draft')
+
+			if (rec.date_expected < rec.date_issue):
+				raise ValidationError('Due date/Return Date cannot be earlier than issue date')
+
+			if rec.borrowed_book.book_availability==True:
+				rec.borrowed_book.book_availability=False
+				rec.borrowed_book.book_status='issued'
+				rec.trn_status='book_issued'
+				print(rec.borrowed_book.book_availability)
+				return rec.borrowed_book.book_availability,rec.borrowed_book.book_status,rec.trn_status
+
+
+	def action_return(self):
+		for rec in self:
+
+			if rec.borrowed_book.book_availability==False:
+				rec.borrowed_book.book_availability=True
+				rec.borrowed_book.book_status='available'
+				rec.trn_status='book_return'
+				print(rec.borrowed_book.book_availability)
+				rec.date_return=datetime.datetime.now()
+				return rec.borrowed_book.book_availability,rec.borrowed_book.book_status,rec.trn_status
 
 
 	@api.model

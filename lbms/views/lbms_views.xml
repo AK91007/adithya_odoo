@@ -30,6 +30,7 @@
 				<field name='book_publisher'/>
 				<field name='publication_date'/>
 				<field name='book_availability'/>
+				<field name='book_status'/>
 			</tree>
 		</field>
 	</record>
@@ -38,8 +39,13 @@
 		<field name='model'>library.management</field>
 		<field name='arch' type='xml'>
 			<form>
-				
+				<header>
+					<field name='book_status' widget='statusbar'/>
+				</header>
 				<sheet>
+					<widget name='web_ribbon' title='Lost' bg_color='bg-danger' attrs="{'invisible':[('book_status','not in','lost')]}"/>
+					<widget name='web_ribbon' title='Available' bg_color='bg-success' attrs="{'invisible':[('book_status','not in','available')]}"/>
+					<widget name='web_ribbon' title='issued' bg_color='bg-warning' attrs="{'invisible':[('book_status','not in','issued')]}"/>
 					<group>
 						<div class='oe_title'>
 							<field name = "image" widget = 'image' options="{'preview_image':'image_128'}" class='oe_avatar'/>
@@ -57,26 +63,16 @@
 						<field name='publication_date' style='width:40%%'/>
 						<field name='book_availability'/>
 					</group>
+					<group>
+						<field name='lend_days' style='width:3%%;'/>
+					</group>
 					
 					
 				</sheet>
 			</form>
 		</field>
 	</record>
-	<record id='library_transaction_tree' model='ir.ui.view'>
-		<field name='name'>Library Transactions</field>
-		<field name='model'>library.transaction</field>
-		<field name='arch' type='xml'>
-			<tree>
-				<field name='borrower_name'/>
-				<field name='borrowed_book'/>
-				<field name='date_issue'/>
-				<field name='date_expected'/>
-				<field name='date_return'/>
-				
-			</tree>
-		</field>
-	</record>
+
 	<record id='library_transaction_form' model='ir.ui.view'>
 		<field name='name'>Transactions Form</field>
 		<field name='model'>library.transaction</field>
@@ -85,7 +81,8 @@
 				<header>
 					<button name='action_issue' type='object' string='Issue' class='btn-success'/>
 					<button name='action_return' type='object' string='Return' class='btn-warning'/>
-					<button name='action_lost' type='object' string='Mark Lost' class='btn-danger'/> 
+					<button name='action_lost' type='object' string='Mark Lost' class='btn-danger'/>
+					<field name='trn_status' widget='statusbar'/> 
 				</header>
 				<sheet>
 					<group>
@@ -105,6 +102,22 @@
 		</field>
 	</record>
 	<record id='library_transaction_tree' model='ir.ui.view'>
+		<field name='name'>Library Transactions</field>
+		<field name='model'>library.transaction</field>
+		<field name='arch' type='xml'>
+			<tree>
+				<field name='name'/>
+				<field name='borrower_name'/>
+				<field name='borrowed_book'/>
+				<field name='date_issue'/>
+				<field name='date_expected'/>
+				<field name='date_return'/>
+				<field name='trn_status'/>
+				
+			</tree>
+		</field>
+	</record>
+<!-- 	<record id='library_transaction_tree' model='ir.ui.view'>
 		<field name='name'>Library Sequence</field>
 		<field name='model'>library.sequence</field>
 		<field name='arch' type='xml'>
@@ -113,7 +126,7 @@
 								
 			</tree>
 		</field>
-	</record>
+	</record> -->
 	<record id='book_locations_tree' model='ir.ui.view'>
 		<field name='name'>Book Locations</field>
 		<field name='model'>book.location</field>
