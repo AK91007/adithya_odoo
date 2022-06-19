@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<odoo>
+	<record id='contact_type_tree_action' model="ir.actions.act_window">
+		<field name="name">Contact Type</field>
+		<field name="res_model">library.contact.type</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem id="menu_library_contact_type" name="Contact Type"
+		action="contact_type_tree_action" parent="contacts.res_partner_menu_config" sequence="1"/>
+</odoo>

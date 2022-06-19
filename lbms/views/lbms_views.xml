@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+	<record id='book_genre_tree' model='ir.ui.view'>
+		<field name='name'>Book Genre</field>
+		<field name='model'>book.genre</field>
+		<field name='arch' type='xml'>
+			<tree>
+				<field name='genre_master'/>
+			</tree>
+		</field>
+	</record>
+	<record id='book_publisher_tree' model='ir.ui.view'>
+		<field name='name'>Publisher</field>
+		<field name='model'>book.publisher</field>
+		<field name='arch' type='xml'>
+			<tree>
+				<field name='publisher_master'/>
+			</tree>
+		</field>
+	</record>
+	<record id='library_management_tree' model='ir.ui.view'>
+		<field name='name'>Library Management</field>
+		<field name='model'>library.management</field>
+		<field name='arch' type='xml'>
+			<tree>
+				<field name='id'/>
+				<field name='book_name'/>
+				<field name='author_name'/>
+				<field name='book_genre'/>
+				<field name='book_publisher'/>
+				<field name='publication_date'/>
+				<field name='book_availability'/>
+			</tree>
+		</field>
+	</record>
+	<record id='library_management_form' model='ir.ui.view'>
+		<field name='name'>Library Management</field>
+		<field name='model'>library.management</field>
+		<field name='arch' type='xml'>
+			<form>
+				
+				<sheet>
+					<group>
+						<div class='oe_title'>
+							<field name = "image" widget = 'image' options="{'preview_image':'image_128'}" class='oe_avatar'/>
+						</div>
+						<span class="o_form_label">
+						
+						</span>
+					</group>
+					<group>
+						<field name='id' style='width:20%%'/>
+						<field name='book_name' style='width:40%%'/>
+						<field name='author_name' style='width:40%%'/>
+						<field name='book_genre' style='width:40%%'/>
+						<field name='book_publisher' style='width:40%%'/>
+						<field name='publication_date' style='width:40%%'/>
+						<field name='book_availability'/>
+					</group>
+					
+					
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id='library_transaction_tree' model='ir.ui.view'>
+		<field name='name'>Library Transactions</field>
+		<field name='model'>library.transaction</field>
+		<field name='arch' type='xml'>
+			<tree>
+				<field name='borrower_name'/>
+				<field name='borrowed_book'/>
+				<field name='date_issue'/>
+				<field name='date_expected'/>
+				<field name='date_return'/>
+				
+			</tree>
+		</field>
+	</record>
+	<record id='library_transaction_form' model='ir.ui.view'>
+		<field name='name'>Transactions Form</field>
+		<field name='model'>library.transaction</field>
+		<field name='arch' type='xml'>
+			<form>
+				<header>
+					<button name='action_issue' type='object' string='Issue' class='btn-success'/>
+					<button name='action_return' type='object' string='Return' class='btn-warning'/>
+					<button name='action_lost' type='object' string='Mark Lost' class='btn-danger'/> 
+				</header>
+				<sheet>
+					<group>
+						<field name='name' style='width:50%%'/>
+					</group>
+					<group>
+						<field name='borrower_name' style='width:40%%'/>
+						<field name='borrowed_book' style='width:40%%'/>
+					</group>
+					<group>
+						<field name='date_issue' style='width:20%%'/>
+						<field name='date_expected' style='width:20%%'/>
+						<field name='date_return' style='width:20%%'/>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id='library_transaction_tree' model='ir.ui.view'>
+		<field name='name'>Library Sequence</field>
+		<field name='model'>library.sequence</field>
+		<field name='arch' type='xml'>
+			<tree>
+				<field name='transaction_sequence'/>
+								
+			</tree>
+		</field>
+	</record>
+	<record id='book_locations_tree' model='ir.ui.view'>
+		<field name='name'>Book Locations</field>
+		<field name='model'>book.location</field>
+		<field name='arch' type='xml'>
+			<tree>
+				<field name='location_master'/>
+				<field name='parent_location'/>
+				<field name='location_complete_name'/>
+			</tree>
+		</field>
+	</record>
+</odoo>

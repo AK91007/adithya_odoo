@@ -1,0 +1,53 @@
+<?xml version = '1.0' encoding='utf-8'?>
+<odoo>
+	<record id='lbms_book_action' model='ir.actions.act_window'>
+		<field name='name'>Books</field>
+		<field name='res_model'>library.management</field>
+		<field name='view_mode'>tree,form</field>
+
+	</record>
+	<record id='lbms_transaction_action' model='ir.actions.act_window'>
+		<field name='name'>Transactions</field>
+		<field name='res_model'>library.transaction</field>
+		<field name='view_mode'>tree,form</field>
+	</record>
+	<record id='lbms_config_genre_action' model='ir.actions.act_window'>
+		<field name='name'>Genre</field>
+		<field name='res_model'>book.genre</field>
+		<field name='view_mode'>tree,form</field>
+	</record>
+	<record id='lbms_config_publisher_action' model='ir.actions.act_window'>
+		<field name='name'>Publishers</field>
+		<field name='res_model'>book.publisher</field>
+		<field name='view_mode'>tree,form</field>
+	</record>
+	<record id='lbms_config_location_action' model='ir.actions.act_window'>
+		<field name='name'>Book Locations</field>
+		<field name='res_model'>book.location</field>
+		<field name='view_mode'>tree,form</field>
+	</record>
+	<record id='lbms_config_sequence_action' model='ir.actions.act_window'>
+		<field name='name'>Transaction Sequence</field>
+		<field name='res_model'>library.sequence</field>
+		<field name='view_mode'>tree,form</field>
+	</record>
+
+	<menuitem id='menu_lbms_root' name="LBMS">
+		<menuitem id='menu_lbms_book_root' name='Books' sequence='0'>
+			<menuitem id='menu_lbms_book_action' action='lbms_book_action'/>
+		</menuitem>
+		<menuitem id='menu_lbms_transaction_root' name='Transactions' sequence='1'>
+			<menuitem id='menu_lbms_transaction_action' action='lbms_transaction_action'/>
+		</menuitem>
+		<!-- <menuitem id='menu_lbms_author_root' name='Author'>
+			<menuitem id='menu_lbms_author_action' action='lbms_author_action'/>
+		</menuitem> -->
+		<menuitem id='menu_lbms_config_root' name='Configuration' sequence='2'>
+			<menuitem id='menu_lbms_config_genre' action='lbms_config_genre_action'/>
+			<menuitem id='menu_lbms_config_publisher' action='lbms_config_publisher_action'/>
+			<menuitem id='menu_lbms_config_location' action='lbms_config_location_action'/>
+			<menuitem id='menu_lbms_config_sequence' action='lbms_config_sequence_action'/>
+		</menuitem>
+	</menuitem>
+
+</odoo>
